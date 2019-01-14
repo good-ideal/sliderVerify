@@ -57,6 +57,9 @@
             success = false,//是否通过验证的标志
             distance = box.offsetWidth - btn.offsetWidth;//滑动成功的宽度（距离）
 
+		btn.addEventListener('touchstart', function(e){
+			console.log(e.touches[0].clientX);
+		})
         //二、给滑块注册鼠标按下事件
         btn.onmousedown = function(e){
 
@@ -68,14 +71,14 @@
 
             //2.当滑块位于初始位置时，得到鼠标按下时的水平位置
             var e = e || window.event;
-            var downX = e.clientX;
+            var downX = e.clientX || e.touches[0].clientX;
 
             //三、给文档注册鼠标移动事件
             document.onmousemove = function(e){
 
                 var e = e || window.event;
                 //1.获取鼠标移动后的水平位置
-                var moveX = e.clientX;
+                var moveX = e.clientX || e.touches[0].clientX;
 
                 //2.得到鼠标水平位置的偏移量（鼠标移动时的位置 - 鼠标按下时的位置）
                 var offsetX = moveX - downX;

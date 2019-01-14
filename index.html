@@ -4,61 +4,14 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
+		<meta name="renderer" content="webkit">
+	  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="layui/css/layui.css" />
-		<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
+		<link rel="stylesheet" href="sliderVerify/sliderVerify.css" />
 	</head>
-	<style>
-		.slider-item {
-			width: 400px;
-			height: 40px;
-			line-height: 40px;
-			background-color: #e8e8e8;
-			position: relative;
-		}
-		.slider-bg {
-			position: absolute;
-			width: 40px;
-		    height: 100%;
-		    z-index: 100;
-		}
-		/* 当滑块验证通过背景颜色 */
-		.slider-bg-success {
-			background-color: #5FB878;
-		}
-		/* 滑块按钮 */
-		.slider-btn {
-			width: 40px;
-			height: 96%;
-			position: absolute;
-			border: 1px solid #ccc;
-			cursor: move;
-			text-align: center;
-			background-color: #fff;
-			user-select: none;
-			color: #666;
-			z-index: 120;
-		}
-		
-		.slider-text {
-			position: absolute;
-			text-align: center;
-			width: 100%;
-            height: 100%;
-            user-select: none;
-			font-size: 16px;
-			z-index: 120;
-		}
-		.slider-text-init {
-			color: #929292;
-		}
-		
-		.slider-text-success {
-			color: #fff;
-		}
-		
-	</style>
-
 	<body>
+		<div class="layui-container">
 		<form class="layui-form" action="">
 			<div class="layui-form-item">
 				<label class="layui-form-label">输入框</label>
@@ -84,12 +37,30 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
+				<label class="layui-form-label">滑动验证</label>
+				<div class="layui-input-block">
+					<div id="slider1">
+						
+					</div>
+						<!--layui-icon-next 指向-->
+						<!--layui-icon-ok-circle 成功-->
+						<!--style="font-size: 18px; color: #5FB878;"-->
+					<!--<div id="slider" class="slider-item">
+						<div class="slider-bg slider-bg-init"></div>
+						<div class="slider-text slider-text-init">请拖动滑块解锁</div>
+						<div class="slider-btn layui-icon layui-icon-next"></div>
+					</div>-->
+					<!--<input type="text" name="title" required  lay-verify="sliderVerify" placeholder="请输入标题" autocomplete="off" class="layui-input">-->
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
 					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 				</div>
 			</div>
 		</form>
+		</div>
 	</body>
 	<script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
@@ -98,17 +69,30 @@
 		}).use(['sliderVerify', 'jquery', 'form'], function() {
 			var sliderVerify = layui.sliderVerify,
 				form = layui.form;
-			//监听提交
-			form.on('submit(formDemo)', function(data) {
-				layer.msg(JSON.stringify(data.field));
-				return false;
-			});
 			var slider = sliderVerify.render({
 				elem: '#slider',
 				onOk: function(){
-					
+					layer.msg("滑块验证通过");
 				}
 			})
+			var slider1 = sliderVerify.render({
+				elem: '#slider1',
+				bg:'layui-bg-red',
+				isAutoVerify:false,
+				onOk: function(){
+					layer.msg("滑块验证通过");
+				}
+			})
+			//监听提交
+			form.on('submit(formDemo)', function(data) {
+				if(slider.isOk()){
+					layer.msg(JSON.stringify(data.field));
+				}else{
+					layer.msg("请先通过滑块验证");
+				}
+				return false;
+			});
+			
 		})
 	</script>
 
