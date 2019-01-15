@@ -1,13 +1,24 @@
+/**
+ * 滑块验证
+ * @author good_idea
+ * @date 2019年1月11日 上午10:48:41
+ */
 layui.define(['jquery','layer','form'], function (exports) {
 	"use strict";
   	var $ = layui.jquery,
   	form = layui.form,
   	layer = layui.layer,
   	device = layui.device()
-  	
   	,sliderVerify = {
-  		
-  	}
+	  	read : function(){
+	  		var css = `.slider-item{height:40px;line-height:40px;background-color:#e2e2e2;position:relative}.slider-bg{position:absolute;width:40px;height:100%;z-index:100}.slider-bg-success{background-color:#5fb878}.slider-btn{width:40px;height:96%;position:absolute;border:1px solid #ccc;cursor:move;text-align:center;background-color:#fff;user-select:none;color:#666;z-index:120}.slider-btn-success{font-size:26px}.slider-text{position:absolute;text-align:center;width:100%;height:100%;user-select:none;font-size:14px;z-index:120}.slider-text-init{color:#6d6d6d}.slider-text-success{color:#fff}.slider-error{animation:glow 800ms ease-out infinite alternate;border:0 solid;border:1px solid}@keyframes glow{0%{border-color:#e6e6e6}100%{border-color:#ff5722}}`,
+			style = document.createElement('style');
+			style.innerHTML = css;
+			style.type = 'text/css';
+			$('head link:last')[0] && $('head link:last').after(style) || $('head').append(style);
+	  	}()
+	  }
+  	
   	,dom = function(d){
   		return d[0];
   	}
@@ -20,7 +31,16 @@ layui.define(['jquery','layer','form'], function (exports) {
 		}
 	}
   	
-  	,MOD_NAME = 'sliderVerify',MOD_BTN = 'slider-btn',MOD_BG = 'slider-bg',MOD_TEXT = 'slider-text',MOD_NEXT = 'layui-icon-next',MOD_OK = 'layui-icon-ok-circle',MOD_BTN_SUCCESS = 'slider-btn-success',
+  	,MOD_NAME = 'sliderVerify',
+  	MOD_BTN = 'slider-btn',
+  	MOD_BG = 'slider-bg',
+  	MOD_TEXT = 'slider-text',
+  	MOD_NEXT = 'layui-icon-next',
+  	MOD_OK = 'layui-icon-ok-circle',
+  	MOD_BTN_SUCCESS = 'slider-btn-success',
+  	MOD_DEFAULT_BG = 'layui-bg-green',
+  	MOD_ERROR_BORDER = 'slider-error',
+  	MOD_CONFIG_TEXT = '请拖动滑块验证',
 
   	
   	Class = function(option) {
@@ -35,8 +55,8 @@ layui.define(['jquery','layer','form'], function (exports) {
   		onOk : null,
   		isOk : false,
   		isAutoVerify : true,
-  		bg : 'layui-bg-green',//默认滑块颜色
-  		text : '请拖动滑块解锁'
+  		bg : MOD_DEFAULT_BG,//默认滑块颜色
+  		text : MOD_CONFIG_TEXT
   	};
   	
   	Class.prototype.render = function() {
@@ -44,20 +64,21 @@ layui.define(['jquery','layer','form'], function (exports) {
   		option = that.config,
   		elem = $(option.elem);
   		option.domid = that.createIdNum();
-  		var sliderVerify = $(`<div id="${option.domid}" ${option.isAutoVerify ? 'lay-verify="sliderVerify"' : ''} class="slider-item">
+  		var sliderDom = $(`<div id="${option.domid}" ${option.isAutoVerify ? 'lay-verify="sliderVerify"' : ''} class="slider-item">
   								<div class="${MOD_BG} ${option.bg}"></div>
   								<div class="${MOD_TEXT} ${MOD_TEXT}-init">${option.text}</div>
   								<div class="${MOD_BTN} layui-icon layui-icon-next"></div>
   							</div>`)
-  		elem.hide().after(sliderVerify);
+  		elem.hide().after(sliderDom);
   		option.domid = $('#'+option.domid);
   		
   		that.events();
   		//自动验证
   		if(option.isAutoVerify){
   			form.verify({
-			    sliderVerify: function(value){
+			    sliderVerify: function(value,dom){
 			      if(!value){
+			      	dom.classList.add(MOD_ERROR_BORDER);
 			        return option.text;
 			      }
 			    }
@@ -83,6 +104,7 @@ layui.define(['jquery','layer','form'], function (exports) {
   	//取消动画
   	Class.prototype.cancelTransition = function() {
   		var container = this.config.container;
+  		this.config.domid[0].classList.remove(MOD_ERROR_BORDER);
   		container.btn.style.transition = "";
   		container.bg.style.transition = "";
   	};
@@ -153,10 +175,12 @@ layui.define(['jquery','layer','form'], function (exports) {
 			option.onOk && typeof option.onOk == 'function' && option.onOk();
 			return ;
         }
+        var seup = function(e){that.stop(e)};
+        that.events.seup = seup;
         if( that.isMobile() ){
-        	document.addEventListener('touchend',function(e){that.stop(e)})
+        	document.addEventListener('touchend',seup)
         }else{
-        	document.onmouseup = function(e){that.stop(e)};
+        	document.onmouseup = seup;
         }
   	}
   	//放开
@@ -176,6 +200,10 @@ layui.define(['jquery','layer','form'], function (exports) {
         //鼠标松开了，此时不需要拖动就清除鼠标移动和松开事件。
         document.onmousemove = null;
         document.onmouseup = null;
+         if( that.isMobile() ){
+        	document.removeEventListener('touchmove',that.events.move,false);
+        	document.removeEventListener('touchend',that.events.seup,false);
+        }
     }
   	//事件
   	Class.prototype.events = function() {

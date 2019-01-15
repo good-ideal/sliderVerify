@@ -1,35 +1,19 @@
-<!doctype html>
 <html>
-<head>
-    <meta charset='utf-8' />
-    <meta name="viewport"
-          content="
-        width = device-width ,
-  height = device-height ,
-        initial-scale = 1,
-        minimum-scale = 1,
-        maximum-scale = 1,
-        user-scalable =no,
 
-  "
-            />
-    <title></title>
+<head>
+<style>
+	.slider-error{animation: glow 800ms ease-out infinite alternate;border: 5px solid;width: 200px;height: 200px;}
+	@keyframes glow {
+	    0% {
+	        border-color: #393;
+	    }
+	    100% {
+	        border-color: #6f6;
+	    }
+	}
+</style>
 </head>
 <body>
-
-<div id="div" style="width:100px;height:100px;background-color:red;position:absolute;"></div>
-<script>
-    var div = document.getElementById('div');
-    div.addEventListener('touchmove', function(event) {
-        event.preventDefault();//阻止其他事件
-        alert(event.target.clientX)
-        // 如果这个元素的位置内只有一个手指的话
-        if (event.targetTouches.length == 1) {
-            var touch = event.targetTouches[0];  // 把元素放在手指所在的位置
-            div.style.left = touch.pageX + 'px';
-            div.style.top = touch.pageY + 'px';
-        }
-    }, false);
-</script>
+<div class="slider-error"></div>
 </body>
 </html>
