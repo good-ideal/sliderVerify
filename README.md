@@ -78,7 +78,7 @@
 	var slider = sliderVerify.render({
 		elem: '#slider',
 		isAutoVerify:false,//关闭自动验证
-		bg : 'layui-',//自定义背景样式名
+		bg : 'layui-bg-red',//自定义背景样式名
 		text : '滑动',
 		onOk: function(){//当验证通过回调
 			layer.msg("滑块验证通过");
