@@ -102,6 +102,20 @@ layui.define(['jquery','layer','form'], function (exports) {
   			icon : 5
   		});
   	};
+  	
+  	Class.prototype.distance = function(){
+  		var container = this.config.container;
+  		return container.box.offsetWidth - container.btn.offsetWidth;//滑动成功的宽度（距离）
+  	};
+  	//重置
+  	Class.prototype.resize = function(distance){
+  		var that = this
+  		,container = that.config.container;
+  		var distance = distance || that.distance();
+  		container.btn.style.left = distance + "px";
+		container.bg.style.width = distance + "px";
+  	};
+  	
   	//取消动画
   	Class.prototype.cancelTransition = function() {
   		var container = this.config.container;
@@ -220,9 +234,8 @@ layui.define(['jquery','layer','form'], function (exports) {
   			bg  : dom(bg),
   			text: dom(text)
   		};
-  		var distance = container.box.offsetWidth - container.btn.offsetWidth;//滑动成功的宽度（距离）
-  		container.distance = distance;
   		option.container = container;
+  		container.distance = that.distance();
   		var down = function(e){that.down(e)};
 		that.events.down = down;
 		
@@ -231,6 +244,13 @@ layui.define(['jquery','layer','form'], function (exports) {
         }else{
         	container.btn.onmousedown = down;
         }
+        var $dom = $(window);
+		$dom.on('resize', option.domid, function(){
+		    if(that.config.isOk){
+		    	//重新计算页面被拉伸
+		    	that.resize();
+		    }
+		});
   	};
   	
   	sliderVerify.render = function(option) {
