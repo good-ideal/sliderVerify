@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
@@ -21,35 +20,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">滑动验证</label>
 				<div class="layui-input-block">
-					<div id="slider">
-						
-					</div>
-						<!--layui-icon-next 指向-->
-						<!--layui-icon-ok-circle 成功-->
-						<!--style="font-size: 18px; color: #5FB878;"-->
-					<!--<div id="slider" class="slider-item">
-						<div class="slider-bg slider-bg-init"></div>
-						<div class="slider-text slider-text-init">请拖动滑块解锁</div>
-						<div class="slider-btn layui-icon layui-icon-next"></div>
-					</div>-->
-					<!--<input type="text" name="title" required  lay-verify="sliderVerify" placeholder="请输入标题" autocomplete="off" class="layui-input">-->
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">滑动验证</label>
-				<div class="layui-input-block">
-					<div id="slider1">
-						
-					</div>
-						<!--layui-icon-next 指向-->
-						<!--layui-icon-ok-circle 成功-->
-						<!--style="font-size: 18px; color: #5FB878;"-->
-					<!--<div id="slider" class="slider-item">
-						<div class="slider-bg slider-bg-init"></div>
-						<div class="slider-text slider-text-init">请拖动滑块解锁</div>
-						<div class="slider-btn layui-icon layui-icon-next"></div>
-					</div>-->
-					<!--<input type="text" name="title" required  lay-verify="sliderVerify" placeholder="请输入标题" autocomplete="off" class="layui-input">-->
+					<div id="slider"></div>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -64,20 +35,13 @@
 	<script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		layui.config({
-			base: 'sliderVerify/'
+			base: 'dist/sliderVerify/'
 		}).use(['sliderVerify', 'jquery', 'form'], function() {
 			var sliderVerify = layui.sliderVerify,
 				form = layui.form;
 			var slider = sliderVerify.render({
 				elem: '#slider',
-				onOk: function(){
-					layer.msg("滑块验证通过");
-				}
-			})
-			var slider1 = sliderVerify.render({
-				elem: '#slider1',
-				bg:'layui-bg-red',
-				onOk: function(){
+				onOk: function(){//当验证通过回调
 					layer.msg("滑块验证通过");
 				}
 			})
