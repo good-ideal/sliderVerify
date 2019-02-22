@@ -26,6 +26,7 @@
 			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+					<button class="layui-btn" type="button" id="reset">重置滑块</button>
 					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 				</div>
 			</div>
@@ -38,12 +39,16 @@
 			base: 'dist/sliderVerify/'
 		}).use(['sliderVerify', 'jquery', 'form'], function() {
 			var sliderVerify = layui.sliderVerify,
+				$ = layui.jquery,
 				form = layui.form;
 			var slider = sliderVerify.render({
 				elem: '#slider',
 				onOk: function(){//当验证通过回调
 					layer.msg("滑块验证通过");
 				}
+			})
+			$('#reset').on('click',function(){
+				slider.reset();
 			})
 			//监听提交
 			form.on('submit(formDemo)', function(data) {
