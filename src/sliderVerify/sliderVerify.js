@@ -115,6 +115,7 @@ layui.define(['jquery','layer','form'], function (exports) {
   	
   	//重置组件
   	Class.prototype.reset = function(){
+  		this.config.isOk = false;
   		return this.render();
   	};
   	
