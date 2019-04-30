@@ -16,6 +16,7 @@ layui.define(['jquery','layer','form'], function (exports) {
 			style.innerHTML = css;
 			style.type = 'text/css';
 			$('head link:last')[0] && $('head link:last').after(style) || $('head').append(style);
+			alert(JSON.stringify(device));
 	  	}()
 	  }
   	
@@ -92,7 +93,7 @@ layui.define(['jquery','layer','form'], function (exports) {
   		}
   	};
   	Class.prototype.isMobile = function(){
-  		return (device.os == 'ios' || device.os == 'android');
+  		return (device.os == 'ios' || device.os == 'android' || device.weixin);
   	};
   	Class.prototype.createIdNum = function(){
   		return MOD_NAME+(+new Date()).toString()+(Math.random().toString()).substr(2,7);
