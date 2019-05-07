@@ -221,8 +221,8 @@ layui.define(['jquery','layer','form'], function (exports) {
         }else{
             container.btn.style.left = 0;
             container.bg.style.width = 0;
-            container.btn.style.transition = "left 1s ease";
-            container.bg.style.transition = "width 1s ease";
+            container.btn.style.transition = "left 1s";
+            container.bg.style.transition = "width 1s";
         }
         //鼠标松开了，不需要拖动就清除鼠标移动和松开事件。
         document.onmousemove = null;
