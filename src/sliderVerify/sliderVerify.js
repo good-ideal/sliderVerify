@@ -11,7 +11,7 @@ layui.define(['jquery','layer','form'], function (exports) {
   	device = layui.device()
   	,sliderVerify = {
 	  	read : function(){
-	  		var css = `.slider-item{height:38px;line-height:38px;background-color:#d0d0d0;position:relative;border: 1px solid white;}.slider-bg{position:absolute;width:40px;height:100%;z-index:100}.slider-btn{width:40px;height:96%;position:absolute;border:1px solid #ccc;cursor:move;text-align:center;background-color:#fff;user-select:none;color:#666;z-index:120}.slider-btn-success{font-size:26px}.slider-text{position:absolute;text-align:center;width:100%;height:100%;user-select:none;font-size:14px;color:#fff;z-index:120}.slider-error{animation:glow 800ms ease-out infinite alternate;}@keyframes glow{0%{border-color:#e6e6e6}100%{border-color:#ff5722}}`,
+	  		var css = '.slider-item{height:38px;line-height:38px;background-color:#d0d0d0;position:relative;border: 1px solid white;}.slider-bg{position:absolute;width:40px;height:100%;z-index:100}.slider-btn{width:40px;height:96%;position:absolute;border:1px solid #ccc;cursor:move;text-align:center;background-color:#fff;user-select:none;color:#666;z-index:120}.slider-btn-success{font-size:26px}.slider-text{position:absolute;text-align:center;width:100%;height:100%;user-select:none;font-size:14px;color:#fff;z-index:120}.slider-error{animation:glow 800ms ease-out infinite alternate;}@keyframes glow{0%{border-color:#e6e6e6}100%{border-color:#ff5722}}',
 			style = document.createElement('style');
 			style.innerHTML = css;
 			style.type = 'text/css';
@@ -70,11 +70,17 @@ layui.define(['jquery','layer','form'], function (exports) {
   		if(!elem[0])return ;
   		if(option.domid) option.domid.remove();
   		option.domid = that.createIdNum();
-  		var sliderDom = $(`<div id="${option.domid}" ${option.isAutoVerify ? 'lay-verify="sliderVerify"' : ''} class="slider-item">
+  		/*var sliderDom = $(`<div id="${option.domid}" ${option.isAutoVerify ? 'lay-verify="sliderVerify"' : ''} class="slider-item">
   								<div class="${MOD_BG} ${option.bg}"></div>
   								<div class="${MOD_TEXT}">${option.text}</div>
   								<div class="${MOD_BTN} layui-icon layui-icon-next"></div>
-  							</div>`);
+  							</div>`);*/
+  		var sliderDom = $(['<div id="' + option.domid + '"' + 
+  						(option.isAutoVerify ? 'lay-verify="sliderVerify"' : '') + 'class="slider-item">',
+  						'<div class="' + MOD_BG + ' ' + option.bg + '"></div>',
+  						'<div class="' + MOD_TEXT + '">' + option.text +'</div>',
+  						'<div class="' + MOD_BTN +' layui-icon layui-icon-next"></div>'
+  						].join(''));
   		elem.hide().after(sliderDom);
   		option.domid = $('#'+option.domid);
   		
