@@ -70,11 +70,6 @@ layui.define(['jquery','layer','form'], function (exports) {
   		if(!elem[0])return ;
   		if(option.domid) option.domid.remove();
   		option.domid = that.createIdNum();
-  		/*var sliderDom = $(`<div id="${option.domid}" ${option.isAutoVerify ? 'lay-verify="sliderVerify"' : ''} class="slider-item">
-  								<div class="${MOD_BG} ${option.bg}"></div>
-  								<div class="${MOD_TEXT}">${option.text}</div>
-  								<div class="${MOD_BTN} layui-icon layui-icon-next"></div>
-  							</div>`);*/
   		var sliderDom = $(['<div id="' + option.domid + '"' + 
   						(option.isAutoVerify ? 'lay-verify="sliderVerify"' : '') + 'class="slider-item">',
   						'<div class="' + MOD_BG + ' ' + option.bg + '"></div>',
