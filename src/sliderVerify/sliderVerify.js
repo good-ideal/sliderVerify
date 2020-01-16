@@ -31,7 +31,8 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 				},
 				reset: function () {
 					return that.reset.call(that);
-				}
+				},
+				verison: '1.5'
 			};
 		},
 		MOD_NAME = "sliderVerify",
@@ -166,13 +167,16 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 			that.move(downX, e);
 		};
 		that.events.move = move;
-
 		//mobile移动
 		if (that.isMobile()) {
 			document.addEventListener("touchmove", that.events.move);
 		} else {
 			//pc移动
 			document.onmousemove = move;
+		}
+		//处理部分浏览器滑动时左右翻页
+		if(navigator.userAgent.indexOf("UCBrowser") > -1){
+			e.preventDefault()
 		}
 	};
 	//移动
