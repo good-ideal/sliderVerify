@@ -32,7 +32,7 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 				reset: function () {
 					return that.reset.call(that);
 				},
-				verison: '1.5'
+				version: '1.6'
 			};
 		},
 		MOD_NAME = "sliderVerify",
