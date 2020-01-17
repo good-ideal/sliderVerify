@@ -102,9 +102,8 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 			device.os == "ios" ||
 			device.os == "android" ||
 			device.android ||
-			device.ios ||
-			device.weixin
-		);
+			device.ios
+		) || (device.weixin && typeof device.weixin === Boolean);
 	};
 	Class.prototype.createIdNum = function () {
 		return (
@@ -169,6 +168,7 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 		that.events.move = move;
 		//mobile移动
 		if (that.isMobile()) {
+			
 			document.addEventListener("touchmove", that.events.move);
 		} else {
 			//pc移动
@@ -286,7 +286,6 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 			that.down(e);
 		};
 		that.events.down = down;
-
 		if (that.isMobile()) {
 			container.btn.addEventListener("touchstart", that.events.down);
 		} else {
