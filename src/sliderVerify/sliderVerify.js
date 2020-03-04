@@ -32,7 +32,7 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 				reset: function () {
 					return that.reset.call(that);
 				},
-				version: '1.6'
+				version: '1.7'
 			};
 		},
 		MOD_NAME = "sliderVerify",
@@ -168,7 +168,7 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 		that.events.move = move;
 		//mobile移动
 		if (that.isMobile()) {
-			
+
 			document.addEventListener("touchmove", that.events.move);
 		} else {
 			//pc移动
@@ -186,7 +186,7 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 			container = option.container;
 		var e = e || window.event;
 		//鼠标移动后的水平位置
-		let moveX = e.clientX || e.touches[0].clientX;
+		var moveX = e.clientX || e.touches[0].clientX;
 		//鼠标水平位置的偏移量（鼠标移动时的位置 - 鼠标按下时的位置）
 		var offsetX = moveX - down;
 
@@ -296,6 +296,8 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 			if (that.config.isOk) {
 				//重新计算页面被拉伸
 				that.resize();
+			}else{
+				that.render();
 			}
 		});
 	};
