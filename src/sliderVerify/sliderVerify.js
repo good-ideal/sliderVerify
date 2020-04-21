@@ -32,7 +32,7 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 				reset: function () {
 					return that.reset.call(that);
 				},
-				version: '1.7'
+				version: '1.7.1'
 			};
 		},
 		MOD_NAME = "sliderVerify",
@@ -58,6 +58,7 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 		onOk: null,
 		isOk: false,
 		isAutoVerify: true,
+		timer: null,
 		bg: MOD_DEFAULT_BG, //默认滑块颜色
 		text: MOD_CONFIG_TEXT
 	};
@@ -297,7 +298,11 @@ layui.define(["jquery", "layer", "form"], function (exports) {
 				//重新计算页面被拉伸
 				that.resize();
 			}else{
-				that.render();
+				//解决持续拉伸页面可能存在卡的问题
+				clearTimeout(option.timer);
+				option.timer = setTimeout(function () {
+					that.render();
+				}, 400)
 			}
 		});
 	};
